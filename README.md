@@ -46,9 +46,11 @@ The following project was used as guinea pig https://github.com/velo/maven-forma
 
 The first local build was discarted and was used only to warm up maven local cache.
 
+Two threads were used as a way to put more preasure on CPU and see how much the build time degraded within docker.
+
 ### Linux
 
-Tradicional local `mvn`:
+Tradicional local `mvn clean install -T2`:
 ```
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
@@ -71,7 +73,7 @@ Tradicional local `mvn`:
 [INFO] ------------------------------------------------------------------------
 ```
 
-Using `mvnd` with image `mvnd/alpine_3_6-openjdk:8b-3.5.2`:
+Using `./mvnd clean install -T2` with image `mvnd/alpine_3_6-openjdk:8b-3.5.2`:
 ```
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
@@ -94,7 +96,7 @@ Using `mvnd` with image `mvnd/alpine_3_6-openjdk:8b-3.5.2`:
 [INFO] ------------------------------------------------------------------------
 ```
 
-Using `mvnd` with image `maven`:
+Using `./mvnd clean install -T2` with image `maven`:
 ```
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
