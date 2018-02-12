@@ -30,9 +30,9 @@ fi
 docker run -it \
     -v "${LOCAL_RESPOSITORY}:/root/.m2" \
     -v "$(pwd):/sources" \
-    -v /var/run/docker.sock:/run/docker.sock \
+    -v /var/run/docker.sock:/var/run/docker.sock \
     -w /sources \
     -e "USER=${USER}" \
     -e "MAVEN_OPTS=${MAVEN_OPTS}" \
-    maven \
+    mvnd/alpine_3_6-openjdk:8-3.5.2 \
     mvn $@
