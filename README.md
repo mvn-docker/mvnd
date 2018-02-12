@@ -39,3 +39,81 @@ $ ./mvnd clean install
 [INFO] Building 
 ```
 
+## Benchmark
+
+To checking the impact of running maven inside docker.
+The following project was used as guinea pig https://github.com/velo/maven-formatter-plugin.
+
+The first local build was discarted and was used only to warm up maven local cache.
+
+### Linux
+
+Tradicional local `mvn`:
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] formatter-plugin ................................... SUCCESS [  1.741 s]
+[INFO] formatters ......................................... SUCCESS [  0.030 s]
+[INFO] formatter-api ...................................... SUCCESS [  1.177 s]
+[INFO] java-formatter ..................................... SUCCESS [ 19.410 s]
+[INFO] java-formatter-test ................................ SUCCESS [  1.201 s]
+[INFO] javascript-formatter ............................... SUCCESS [ 17.858 s]
+[INFO] javascript-formatter-test .......................... SUCCESS [  1.559 s]
+[INFO] formatter-maven-plugin ............................. SUCCESS [  3.433 s]
+[INFO] formatter-maven-plugin-its ......................... SUCCESS [  7.081 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 48.084 s (Wall Clock)
+[INFO] Finished at: 2018-02-12T22:26:49+13:00
+[INFO] Final Memory: 195M/6211M
+[INFO] ------------------------------------------------------------------------
+```
+
+Using `mvnd` with image `mvnd/alpine_3_6-openjdk:8b-3.5.2`:
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] formatter-plugin ................................... SUCCESS [  2.016 s]
+[INFO] formatters ......................................... SUCCESS [  0.038 s]
+[INFO] formatter-api ...................................... SUCCESS [  1.597 s]
+[INFO] java-formatter ..................................... SUCCESS [ 18.499 s]
+[INFO] java-formatter-test ................................ SUCCESS [  1.323 s]
+[INFO] javascript-formatter ............................... SUCCESS [ 17.118 s]
+[INFO] javascript-formatter-test .......................... SUCCESS [  1.878 s]
+[INFO] formatter-maven-plugin ............................. SUCCESS [  3.685 s]
+[INFO] formatter-maven-plugin-its ......................... SUCCESS [  8.649 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 51.273 s (Wall Clock)
+[INFO] Finished at: 2018-02-12T09:34:00Z
+[INFO] Final Memory: 191M/4969M
+[INFO] ------------------------------------------------------------------------
+```
+
+Using `mvnd` with image `maven`:
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] formatter-plugin ................................... SUCCESS [  1.723 s]
+[INFO] formatters ......................................... SUCCESS [  0.038 s]
+[INFO] formatter-api ...................................... SUCCESS [  1.218 s]
+[INFO] java-formatter ..................................... SUCCESS [ 18.542 s]
+[INFO] java-formatter-test ................................ SUCCESS [  1.114 s]
+[INFO] javascript-formatter ............................... SUCCESS [ 17.332 s]
+[INFO] javascript-formatter-test .......................... SUCCESS [  1.554 s]
+[INFO] formatter-maven-plugin ............................. SUCCESS [  3.416 s]
+[INFO] formatter-maven-plugin-its ......................... SUCCESS [  7.685 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 47.719 s (Wall Clock)
+[INFO] Finished at: 2018-02-12T09:30:58Z
+[INFO] Final Memory: 189M/4844M
+[INFO] ------------------------------------------------------------------------
+```
+
