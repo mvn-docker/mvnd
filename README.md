@@ -48,7 +48,7 @@ The first local build was discarted and was used only to warm up maven local cac
 
 Two threads were used as a way to put more preasure on CPU and see how much the build time degraded within docker.
 
-### Linux
+### Ubuntu 17.10
 
 Tradicional local `mvn clean install -T2`:
 ```
@@ -119,3 +119,50 @@ Using `./mvnd clean install -T2` with image `maven`:
 [INFO] ------------------------------------------------------------------------
 ```
 
+### macOS
+
+Tradicional local `mvn clean install -T2`:
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] formatter-plugin ................................... SUCCESS [  2.981 s]
+[INFO] formatters ......................................... SUCCESS [  0.040 s]
+[INFO] formatter-api ...................................... SUCCESS [  1.694 s]
+[INFO] java-formatter ..................................... SUCCESS [ 21.804 s]
+[INFO] java-formatter-test ................................ SUCCESS [  2.813 s]
+[INFO] javascript-formatter ............................... SUCCESS [ 20.746 s]
+[INFO] javascript-formatter-test .......................... SUCCESS [  3.411 s]
+[INFO] formatter-maven-plugin ............................. SUCCESS [  7.228 s]
+[INFO] formatter-maven-plugin-its ......................... SUCCESS [ 10.549 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 01:04 min (Wall Clock)
+[INFO] Finished at: 2018-02-12T22:57:18+13:00
+[INFO] Final Memory: 160M/1560M
+[INFO] ------------------------------------------------------------------------
+```
+
+Using `./mvnd clean install -T2` with image `mvnd/alpine_3_6-openjdk:8b-3.5.2`:
+```
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] formatter-plugin ................................... SUCCESS [ 13.160 s]
+[INFO] formatters ......................................... SUCCESS [  0.087 s]
+[INFO] formatter-api ...................................... SUCCESS [  3.885 s]
+[INFO] java-formatter ..................................... SUCCESS [ 41.653 s]
+[INFO] java-formatter-test ................................ SUCCESS [  7.554 s]
+[INFO] javascript-formatter ............................... SUCCESS [ 40.568 s]
+[INFO] javascript-formatter-test .......................... SUCCESS [  8.645 s]
+[INFO] formatter-maven-plugin ............................. SUCCESS [ 14.782 s]
+[INFO] formatter-maven-plugin-its ......................... SUCCESS [ 17.564 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 02:09 min (Wall Clock)
+[INFO] Finished at: 2018-02-12T10:00:24Z
+[INFO] Final Memory: 102M/322M
+[INFO] ------------------------------------------------------------------------
+```
