@@ -28,7 +28,7 @@ fi
 
 
 docker run -it \
-    -v "${LOCAL_RESPOSITORY}:/root/.m2" \
+    -v "${LOCAL_RESPOSITORY}:/home/maven/.m2" \
     -v "$(pwd):/sources" \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -w /sources \
