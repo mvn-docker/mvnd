@@ -1,0 +1,13 @@
+language: bash
+
+services:
+  - docker
+
+env:
+  - SHUNIT_COLOR='always'
+
+script:
+  # Run the source through ShellCheck (http://www.shellcheck.net).
+  - shellcheck -s bash mvnd
+  # Execute the unit tests.
+  - ./tests/test.sh

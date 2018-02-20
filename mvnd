@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # ----------------------------------------------------------------------------
 # Maven on docker scripts
@@ -18,15 +18,15 @@
 # stop on errors
 set -e
 # poor man "stack trace"
-SCRIPT=$0
-err_report() {
-    echo "Error on $SCRIPT line $1"
-}
-trap 'err_report $LINENO' ERR
+#SCRIPT=$0
+#err_report() {
+#    echo "Error on $SCRIPT line $1"
+#}
+#trap 'err_report $LINENO' ERR
 
 
 # enable script debug when maven debug is enabled
-[[ ( $@ == *'-X'* ) || ( $@ == *'--debug'* ) ]] && set -x
+[[ ( "$*" == *'-X'* ) || ( "$*" == *'--debug'* ) ]] && set -x
 
 
 # Location - root of project
@@ -53,8 +53,8 @@ MAVEN_VERSION="3.5.2"
 
 
 PROPERTIES_FILE="$DIR/mvnd.properties"
-if [ -f $PROPERTIES_FILE ]; then
-  eval $(cat $PROPERTIES_FILE)
+if [ -f "$PROPERTIES_FILE" ]; then
+  eval "$(cat "$PROPERTIES_FILE")"
 fi
 
 MVND_IMAGE=mvnd/"${BASE_IMAGE//[^[:alnum:]]/_}-${JAVA_DISTRIBUTION}:${JAVA_VERSION}-${MAVEN_VERSION}"
@@ -67,9 +67,9 @@ docker run -it \
     -e "USER=${USER}" \
     -e "MAVEN_OPTS=${MAVEN_OPTS}" \
     $MVND_IMAGE \
-    mvn $@
+    mvn "$@"
 
-if [[ ($@ == *'-v'*) || $@ == *'--version'* ]]; then
+if [[ ("$*" == *'-v'*) || "$*" == *'--version'* ]]; then
   bold=$(tput bold)
   normal=$(tput sgr0)
   echo "${bold}Maven meets docker v0.1-alpha${normal}"
