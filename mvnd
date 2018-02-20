@@ -15,6 +15,20 @@
 #       set MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000
 # ----------------------------------------------------------------------------
 
+# stop on errors
+set -e
+# poor man "stack trace"
+SCRIPT=$0
+err_report() {
+    echo "Error on $SCRIPT line $1"
+}
+trap 'err_report $LINENO' ERR
+
+
+# enable script debug when maven debug is enabled
+[[ $@ == *'-X'* ]] && set -x
+[[ $@ == *'--debug'* ]] && set -x
+
 
 # Location - root of project
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
