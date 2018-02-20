@@ -16,6 +16,10 @@
 # ----------------------------------------------------------------------------
 
 
+# Location - root of project
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+
 # resolve local repository
 if [ -z "$LOCAL_RESPOSITORY" ] ; then
   LOCAL_RESPOSITORY="$HOME/.m2"
@@ -26,13 +30,27 @@ fi
 
 # echo "Using m2 repo at $LOCAL_RESPOSITORY"
 
+# add argument -nn / --no-network => --net=none
+
+# default image to run, to change it, create a file called 'mvnd.properties' and override properties
+BASE_IMAGE="ubuntu:17.10"
+JAVA_DISTRIBUTION="openjdk"
+JAVA_VERSION="8"
+MAVEN_VERSION="3.5.2"
+
+
+PROPERTIES_FILE="$DIR/mvnd.properties"
+if [ -f $PROPERTIES_FILE ]; then
+  eval $(cat $PROPERTIES_FILE)
+fi
+
 
 docker run -it \
     -v "${LOCAL_RESPOSITORY}:/home/maven/.m2" \
-    -v "$(pwd):/sources" \
+    -v "$DIR:/sources" \
     -v /var/run/docker.sock:/var/run/docker.sock \
     -w /sources \
     -e "USER=${USER}" \
     -e "MAVEN_OPTS=${MAVEN_OPTS}" \
-    mvnd/alpine_3_6-openjdk:8-3.5.2 \
+    mvnd/"${BASE_IMAGE//[^[:alnum:]]/_}-${JAVA_DISTRIBUTION}:${JAVA_VERSION}-${MAVEN_VERSION}" \
     mvn $@
